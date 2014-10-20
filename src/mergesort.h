@@ -21,16 +21,16 @@ namespace MergeSort
             int k = size/2;
             for(int i=0; i<size; i++)
             {
-              if(!(arr[i] < arr[k] && i<k ) && k<size)
+              if((arr[i] > arr[k]) && (k<size) )
               {
+                Type t = arr[k];
                 int l=k;
                 while(l>i)
                 {
-                  Type t = arr[l];
                   arr[l] = arr[l-1];
-                  arr[l-1] = t;
                   l--;
                 }
+                arr[i] = t;
                 k++;
               }
             }
