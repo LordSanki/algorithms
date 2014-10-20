@@ -3,23 +3,33 @@
 
 using namespace std;
 
+bool test_merge_sort();
+
 int main()
 {
-  int a[16] = {0,2,3,6,7,3,7,3,7,74,5,2,67,8,5,16};
-
-  for(int i=0; i<16; i++)
-  {
-    cout<<a[i]<<" ";
-  }
-  cout<<endl;
-
-  MergeSort::sortArray(a, 16);
-
-  for(int i=0; i<16; i++)
-  {
-    cout<<a[i]<<" ";
-  }
-  cout<<endl;
+  cout<<"Testing Merge Sort: "<<test_merge_sort()<<endl;
   return 0;
+}
+
+bool test_merge_sort()
+{
+  int size = 100000;
+  float f = 3.333;
+  int *a = (int*)&f;
+  unsigned short int *arr = new unsigned short int [size];
+  unsigned long int addr = ((unsigned long int)arr);
+  for (int i=1; i<size; i++)
+  {
+    arr[i] = ((addr|i)*arr[i-1])^*a;
+  }
+  
+  MergeSort::sortArray(arr, size);
+
+  bool result = true;
+  for(int i=1; i<size; i++)
+    if(arr[i] < arr[i-1]) { result = false; break; }
+  
+  delete [] arr;
+  return result;
 }
 
