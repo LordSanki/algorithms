@@ -6,13 +6,13 @@
 namespace QuickSort
 {
   void print_array(int * arr, int size)
-{
-  for(int i=0; i<size; i++)
   {
-    printf("%d,",arr[i]);
+    for(int i=0; i<size; i++)
+    {
+      printf("%d,",arr[i]);
+    }
+    printf("\n");
   }
-  printf("\n");
-}
   int choose_pivot(int *arr, int size)
   {
     return size/2;
@@ -52,6 +52,17 @@ namespace QuickSort
       if(size > 0)
         sortArray( &arr[pivot], size );
     }
+  }
+  int rselect_order(int * arr, int size, int pos)
+  {
+    int pivot = choose_pivot(arr, size);
+    pivot = partition(arr, size, pivot);
+    if(pivot > pos-1)
+      return rselect_order(arr, pivot, pos);
+    else if(pivot < pos-1)
+      return rselect_order(&arr[pivot+1],size-(pivot+1),pos-(pivot+1));
+    else
+      return arr[pivot];
   }
 };
 
