@@ -3,6 +3,9 @@
 #include <debug_print.h>
 #include <cstdlib>
 #include <cstdio>
+//#define MED3
+//#define LAST
+#define FIRST
 namespace QuickSort
 {
   void print_array(int * arr, int size)
@@ -15,7 +18,30 @@ namespace QuickSort
   }
   int choose_pivot(int *arr, int size)
   {
-    return size/2;
+#ifdef FIRST
+      return 0;
+#endif
+#ifdef LAST
+      return size-1;
+#endif
+#ifdef MID
+      return size/2;
+#endif
+#ifdef MED3
+      int first = arr[0];
+      int last = arr[size-1];
+      int mid; int mid_index;
+      if(size%2 == 0)
+        mid_index = (size/2)-1;
+      else
+        mid_index = size/2;
+      mid = arr[mid_index];
+      if((first < last && first > mid)||(first >last && first <mid))
+        return 0;
+      if((last <first && last >mid)||(last >first && last <mid))
+        return size -1;
+      return mid_index;
+#endif
   }
   int partition(int *arr, int size, int pivot)
   {
@@ -52,6 +78,28 @@ namespace QuickSort
       if(size > 0)
         sortArray( &arr[pivot], size );
     }
+  }
+  long long count_comparisons(int *arr, int size, long long comp = 0)
+  {
+    if(size > 1)
+    { // Divide
+      int pivot = choose_pivot(arr, size);
+      comp = comp + (size-1);
+      pivot = partition(arr, size, pivot);
+      if(pivot > 0)
+      {
+        //comp = comp + (pivot-1);
+        comp = count_comparisons( arr, pivot, comp);
+      }
+      pivot++;
+      size = size - pivot;
+      if(size > 0)
+      {
+        //comp = comp + (size-1);
+        comp = count_comparisons( &arr[pivot], size,comp );
+      }
+    }
+    return comp;
   }
   int rselect_order(int * arr, int size, int pos)
   {
