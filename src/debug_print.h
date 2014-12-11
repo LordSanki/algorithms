@@ -1,7 +1,7 @@
 #ifndef __DEBUG_PRINT__
 #define __DEBUG_PRINT__
 
-#if 0
+#if 1
 #include <iostream>
 #define DE(X) std::cout<<#X<<":"<<X<<std::endl
 #define D(X) std::cout<<":"<<X<<" "

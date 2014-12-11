@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#define NUM_VALS 10000
+//#define NUM_VALS 1000
+//#define NUM_VALS 100
 typedef void(*Sorter)(int*,int);
 bool test_sort(Sorter sort);
 int * read_input();
@@ -22,8 +25,12 @@ int main()
 //  cout<<"Inversions: "<<MergeSort::countInversions(read_input(),100000)<<endl;
 //  std::cout<<"Testing: "<< test_sort(QuickSort::sortArray)<<std::endl;
 
-    std::cout<<"Testing Rselect: "<<test_rselect()<<std::endl;
+//    std::cout<<"Testing Rselect: "<<test_rselect()<<std::endl;
 //    std::cout<<"Testing Rselect: "<<QuickSort::rselect_order(arr,6,3)<<std::endl;
+
+  int * arr = read_input();
+//  int arr[] = {3,9,8,4,6,10,2,5,7,1};
+  cout<<"Comparisons: "<<QuickSort::count_comparisons(arr, NUM_VALS)<<endl;
   return 0;
 }
 
@@ -84,7 +91,7 @@ bool test_rselect()
 
 int * read_input()
 {
-  int size = 100000;
+  int size = NUM_VALS;
   int *arr = new int [size];
   for(int i=0; i<size; i++)
   {
