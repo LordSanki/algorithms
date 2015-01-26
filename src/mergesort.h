@@ -4,8 +4,14 @@
 namespace MergeSort
 {
   template <typename Type>
-    void sortArray(Type *arr, int size)
+    void sortArray(Type *arr, int size, Type *space=NULL)
     {
+      bool del_flag = false;
+      if(NULL == space)
+      {
+        space = new Type[size];
+        del_flag = true;
+      }
 #pragma omp parallel
       {
 #pragma omp single nowait
@@ -13,30 +19,36 @@ namespace MergeSort
           if(size > 1)
           { // Divide
 #pragma omp task
-            sortArray( arr, size/2 );
+            sortArray( arr, size/2, space );
 #pragma omp task
-            sortArray( &arr[size/2], size-(size/2) );
+            sortArray( &arr[size/2], size-(size/2), &space[size/2] );
 #pragma omp taskwait
             // Merge
-            int k = size/2;
+            int k = size/2; int j=0;
             for(int i=0; i<size; i++)
             {
-              if((arr[i] > arr[k]) && (k<size) && (i<k))
+              if( (j < (size/2)) && (k<size) )
               {
-                Type t = arr[k];
-                int l=k;
-                while(l>i)
-                {
-                  arr[l] = arr[l-1];
-                  l--;
-                }
-                arr[i] = t;
-                k++;
+                if(arr[j] > arr[k])
+                  space[i] = arr[k++];
+                else
+                  space[i] = arr[j++];
+              }
+              else if(j == (size/2))
+              {
+                space[i] = arr[k++];
+              }
+              else
+              {
+                space[i] = arr[j++];
               }
             }
+            for(int i=0; i<size; i++)
+              arr[i] = space[i];
           }
         }
       }
+      if(del_flag) delete [] space;
     }
 
   template <typename Type>
