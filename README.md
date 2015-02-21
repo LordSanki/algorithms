@@ -1,9 +1,10 @@
-Algorithms
+Overview
 ==========
-Implementation of algorithms in C/C++
+Implementation of algorithms and datastructures in C/C++
 Sample inputs can be found in traces directory
-List
------
+
+Algorithms
+----------
 * parallel merge sort: openmp accelerated merge sort.
 * Count inversions in array
 * Quick sort
@@ -15,3 +16,15 @@ List
 * reverse stack without using a extra memory
 * reverse a link list
 * Dijkstra shortest path
+
+Datastructures
+--------------
+* heap
+
+Parallel Algorithms
+-------------------
+* Vector Addition (CUDA)
+* Matrix Multiplication
+* Tiled Matrix Multiplication
+* Tiled Image Convolution
+
